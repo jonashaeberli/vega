@@ -22,6 +22,11 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+install(PROGRAMS
+        passive_joints/passive_joints.py
+        DESTINATION lib/${PROJECT_NAME}
+)
+
 install(
   DIRECTORY
     urdf
