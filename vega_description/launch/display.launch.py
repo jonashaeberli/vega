@@ -5,15 +5,24 @@ from launch.substitutions import Command
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue  # Import ParameterValue
 
+import xacro
+
 def generate_launch_description():
 
     ####### DATA INPUT ##########
-    urdf_file = 'vega_description.urdf'
     package_description = "vega_description"
+    urdf_file = 'vega_description.xacro'
 
     ####### DATA INPUT END ##########
     print("Fetching URDF ==>")
-    robot_desc_path = os.path.join(get_package_share_directory(package_description), "urdf", urdf_file)
+    robot_model_path = os.path.join(
+        get_package_share_directory(package_description))
+
+    xacro_file = os.path.join(robot_model_path, 'urdf', urdf_file)
+
+    # convert XACRO file into URDF
+    doc = xacro.parse(open(xacro_file))
+    xacro.process_doc(doc)
 
     # Robot State Publisher
     robot_state_publisher_node = Node(
@@ -23,7 +32,7 @@ def generate_launch_description():
         emulate_tty=True,
         parameters=[{
             'use_sim_time': True,
-            'robot_description': ParameterValue(Command(['xacro ', robot_desc_path]), value_type=str)
+            'robot_description': doc.toxml(),
         }],
         output="screen"
     )
@@ -32,7 +41,7 @@ def generate_launch_description():
         package='joint_state_publisher_gui',
         executable='joint_state_publisher_gui',
         parameters=[{
-            'source_list': ['passive_joint_states']
+            'source_list': ['control_joints']
         }],
         output='screen',
     )

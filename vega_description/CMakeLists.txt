@@ -22,10 +22,11 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-install(PROGRAMS
-        passive_joints/passive_joints.py
-        DESTINATION lib/${PROJECT_NAME}
-)
+# Uncomment when you want to use the passive joint handler (not recommended just use the urdf which utilies fake mimic joints)
+# install(PROGRAMS
+#         passive_joints/passive_joints.py
+#         DESTINATION lib/${PROJECT_NAME}
+# )
 
 install(
   DIRECTORY
