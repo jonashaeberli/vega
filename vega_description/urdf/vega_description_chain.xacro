@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot
+  xmlns:xacro="http://www.ros.org/wiki/xacro"
   name="vega_description">
 
   <link
@@ -35,7 +36,7 @@
     <collision>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="1.571 0 0" />
       <geometry>
         <mesh
           filename="package://vega_description/meshes/Link_1.STL" />
@@ -207,7 +208,7 @@
 
   <joint
     name="Joint_3_4"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0.25 0.055 0"
       rpy="0 1.309 3.1416" />
@@ -217,6 +218,11 @@
       link="Link_4" />
     <axis
       xyz="0 -1 0" />
+    <limit
+      lower="-3.142"
+      upper="3.142"
+      effort="15"
+      velocity="2.094" />
   </joint>
 
   <link
@@ -262,7 +268,7 @@
 
   <joint
     name="Joint_4_5"
-    type="continuous">
+    type="revolute">
     <origin
       xyz="0.3 0.025 0"
       rpy="-1.5708 0 0" />
@@ -272,6 +278,11 @@
       link="Link_5" />
     <axis
       xyz="0 0 1" />
+    <limit
+      lower="-3.142"
+      upper="3.142"
+      effort="10"
+      velocity="2.094" />
   </joint>
 
   <link
@@ -315,23 +326,38 @@
     </collision>
   </link>
 
-  <joint
-    name="Joint_2_6"
-    type="revolute">
+  <link
+    name="Link_2_6">
+  </link>
+
+    <joint
+    name="Joint_2_6_1"
+    type="continuous">
+    <mimic joint="Joint_2_3" multiplier="-1" offset="0"/>
     <origin
       xyz="0.02 0.085 -0.0285"
       rpy="0 0 0.17453" />
     <parent
       link="Link_2" />
     <child
+      link="Link_2_6" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+
+  <joint
+    name="Joint_2_6_2"
+    type="continuous">
+    <mimic joint="Joint_3_4" multiplier="-1" offset="0"/>
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="Link_2_6" />
+    <child
       link="Link_6" />
     <axis
       xyz="0 0 1" />
-    <limit
-      lower="-3.142"
-      upper="3.142"
-      effort="15"
-      velocity="2.094" />
   </joint>
 
   <link
@@ -378,6 +404,7 @@
   <joint
     name="Joint_6_7"
     type="continuous">
+    <mimic joint="Joint_3_4" multiplier="1" offset="0"/>
     <origin
       xyz="-0.115 0 0.025"
       rpy="1.5708 0 1.6580" />
@@ -434,6 +461,7 @@
   <joint
     name="Joint_2_8"
     type="continuous">
+    <mimic joint="Joint_2_3" multiplier="-1" offset="0"/>    
     <origin
       xyz="-0.055 0.135 0.049"
       rpy="1.5708 0 1.8326" />
@@ -477,7 +505,7 @@
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
+        xyz="0.075 -0.05 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
@@ -489,6 +517,7 @@
   <joint
     name="Joint_8_9"
     type="continuous">
+    <mimic joint="Joint_2_3" multiplier="1" offset="0"/>
     <origin
       xyz="0.25 -0.0175 0"
       rpy="1.5708 -1.309 3.1416" />
@@ -540,18 +569,108 @@
       </geometry>
     </collision>
   </link>
-  
+
+  <link
+    name="Link_9_10">
+  </link>
+
   <joint
-    name="Joint_9_10"
+    name="Joint_9_10_1"
     type="continuous">
+    <mimic joint="Joint_2_3" multiplier="-1" offset="0"/>
     <origin
       xyz="0.095 -0.015 0.0175"
       rpy="1.5708 0 0" />
     <parent
       link="Link_9" />
     <child
+      link="Link_9_10" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  
+  <joint
+    name="Joint_9_10_2"
+    type="continuous">
+    <mimic joint="Joint_3_4" multiplier="-1" offset="0"/>
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="Link_9_10" />
+    <child
       link="Link_10" />
     <axis
       xyz="0 1 0" />
   </joint>
+
+  <link
+    name="Link_11">
+    <inertial>
+      <origin
+        xyz="0.151523838773093 0.0120793005495848 -0.00451680024396695"
+        rpy="0 0 0" />
+      <mass
+        value="0.0676472542576388" />
+      <inertia
+        ixx="3.54922400123965E-06"
+        ixy="-2.99865301015401E-16"
+        ixz="4.85967691354056E-15"
+        iyy="0.000543285324126437"
+        iyz="1.19005104729777E-08"
+        izz="0.000541662726314469" />
+    </inertial>
+  </link>
+
+  <joint
+    name="Joint_5_11"
+    type="fixed">
+    <origin
+      xyz="0.030 -0.020 0"
+      rpy="0 0 0" />
+    <parent
+      link="Link_5" />
+    <child
+      link="Link_11" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+
+  <link
+    name="Link_Tool">
+    <inertial>
+      <origin
+        xyz="0.151523838773093 0.0120793005495848 -0.00451680024396695"
+        rpy="0 0 0" />
+      <mass
+        value="0.0676472542576388" />
+      <inertia
+        ixx="3.54922400123965E-06"
+        ixy="-2.99865301015401E-16"
+        ixz="4.85967691354056E-15"
+        iyy="0.000543285324126437"
+        iyz="1.19005104729777E-08"
+        izz="0.000541662726314469" />
+    </inertial>
+  </link>
+
+  <joint
+    name="Joint_11_Tool"
+    type="revolute">
+    <origin
+      xyz="0.030 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="Link_11" />
+    <child
+      link="Link_Tool" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-3.142"
+      upper="3.142"
+      effort="10"
+      velocity="2.094" />
+  </joint>
 </robot>
+

@@ -64,7 +64,3 @@ class Kinematics:
         else:
             print("Invalide inverse kinematics arguments")
             return
-        
-
-kinematics = Kinematics()
-kinematics.inverse_kinematics(350, 100, 50)

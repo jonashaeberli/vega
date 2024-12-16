@@ -36,7 +36,7 @@
     <collision>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="1.571 0 0" />
       <geometry>
         <mesh
           filename="package://vega_description/meshes/Link_1.STL" />
@@ -520,7 +520,7 @@
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
+        xyz="0.075 -0.05 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
@@ -599,4 +599,74 @@
     <axis
       xyz="0 1 0" />
   </joint>
+
+  <link
+    name="Link_11">
+    <inertial>
+      <origin
+        xyz="0.151523838773093 0.0120793005495848 -0.00451680024396695"
+        rpy="0 0 0" />
+      <mass
+        value="0.0676472542576388" />
+      <inertia
+        ixx="3.54922400123965E-06"
+        ixy="-2.99865301015401E-16"
+        ixz="4.85967691354056E-15"
+        iyy="0.000543285324126437"
+        iyz="1.19005104729777E-08"
+        izz="0.000541662726314469" />
+    </inertial>
+  </link>
+
+  <joint
+    name="Joint_5_11"
+    type="fixed">
+    <origin
+      xyz="0.030 -0.020 0"
+      rpy="0 0 0" />
+    <parent
+      link="Link_5" />
+    <child
+      link="Link_11" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+
+  <link
+    name="Link_Tool">
+    <inertial>
+      <origin
+        xyz="0.151523838773093 0.0120793005495848 -0.00451680024396695"
+        rpy="0 0 0" />
+      <mass
+        value="0.0676472542576388" />
+      <inertia
+        ixx="3.54922400123965E-06"
+        ixy="-2.99865301015401E-16"
+        ixz="4.85967691354056E-15"
+        iyy="0.000543285324126437"
+        iyz="1.19005104729777E-08"
+        izz="0.000541662726314469" />
+    </inertial>
+  </link>
+
+  <joint
+    name="Joint_11_Tool"
+    type="revolute">
+    <origin
+      xyz="0.030 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="Link_11" />
+    <child
+      link="Link_Tool" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-3.142"
+      upper="3.142"
+      effort="10"
+      velocity="2.094" />
+  </joint>
 </robot>
+
