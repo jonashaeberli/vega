@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'vega_gui = vega_gui.vega_gui:main',
         ],
     },
 )

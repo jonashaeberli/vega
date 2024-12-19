@@ -25,7 +25,7 @@
         rpy="1.571 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_1.STL" />
+          filename="package://vega_description/meshes/Link_1.STL"/>
       </geometry>
       <material
         name="">
@@ -262,7 +262,8 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_5.STL" />
+          filename="package://vega_description/meshes/Link_5.STL" 
+          scale="0.001 0.001 0.001" />
       </geometry>
       <material
         name="">
@@ -276,7 +277,8 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_5.STL" />
+          filename="package://vega_description/meshes/Link_5.STL" 
+          scale="0.001 0.001 0.001" />
       </geometry>
     </collision>
   </link>
@@ -454,7 +456,8 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_8.STL" />
+          filename="package://vega_description/meshes/Link_8.STL" 
+          scale="0.001 0.001 0.001" />
       </geometry>
       <material
         name="">
@@ -468,7 +471,8 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_8.STL" />
+          filename="package://vega_description/meshes/Link_8.STL" 
+          scale="0.001 0.001 0.001" />
       </geometry>
     </collision>
   </link>
@@ -622,7 +626,7 @@
     name="Joint_5_11"
     type="fixed">
     <origin
-      xyz="0.030 -0.020 0"
+      xyz="0.060 -0.054 0.025"
       rpy="0 0 0" />
     <parent
       link="Link_5" />
@@ -648,13 +652,34 @@
         iyz="1.19005104729777E-08"
         izz="0.000541662726314469" />
     </inertial>
+    <visual>
+      <origin
+        xyz="0 -0.01 0"
+        rpy="1.5701 0 0" />
+      <geometry>
+        <cylinder radius="0.0275" length="0.02"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 -0.01 0"
+        rpy="1.5701 0 0" />
+      <geometry>
+        <cylinder radius="0.0275" length="0.02"/>
+      </geometry>
+    </collision>
   </link>
 
   <joint
     name="Joint_11_Tool"
     type="revolute">
     <origin
-      xyz="0.030 0 0"
+      xyz="0 0 0"
       rpy="0 0 0" />
     <parent
       link="Link_11" />
