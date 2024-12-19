@@ -1,0 +1,14 @@
+# Goal definition
+string trajectory_type
+geometry_msgs/Pose start_position
+geometry_msgs/Pose end_position
+
+---
+
+# Result definition
+trajectory_msgs/JointTrajectory joint_trajectory
+
+---
+
+# Feedback definition
+string status

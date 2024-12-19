@@ -1,3 +1,4 @@
+from pydoc import doc
 import numpy as np
 import warnings
 
@@ -7,10 +8,9 @@ class Kinematics:
         self.upper_arm_length = 250 #mm
         self.lower_arm_length = 300 #mm
         
-        self.axis_4_offset_x = 30 #mm
-        self.axis_4_offset_y = 3.5 #mm this includes the offset that is created to the y position of the rotation tabel
-        #currently it is using the distance to the lower corner of Link_5
-        self.axis_4_offset_z = -20 #mm
+        self.axis_4_offset_x = 60 #mm
+        self.axis_4_offset_y = -30 #mm this includes the offset that is created to the y position of the rotation tabel
+        self.axis_4_offset_z = -54 #mm
 
         self.base_offset_x = 20 #mm
         self.base_offset_z = 187 #mm
@@ -27,8 +27,11 @@ class Kinematics:
         warnings.filterwarnings("error", category=RuntimeWarning)
 
 
-    def inverse_kinematics(self, x=None, y=None, z=None):
+    def inverse_kinematics(self, x=None, y=None, z=None, yaw=None):
+        """Calculates the inverse Kinematics for Vega robotic arm"""
         if x is not None and y is not None and z is not None:
+            if yaw is None:
+                yaw = 0 #rad
             # z offset is independet of the rotation angle therfor we can already set it here
             # x and y we can only set after we know the rotation angle of the joint_1_2
             z = z - self.axis_4_offset_z - self.base_offset_z
@@ -59,8 +62,39 @@ class Kinematics:
 
             joint_angles = {'joint_1_2_angle': np.rad2deg(joint_1_2_angle), 'joint_2_3_angle': np.rad2deg(joint_2_3_angle), 'joint_2_6_angle': np.rad2deg(joint_2_6_angle)}
             print(joint_angles)
-            return
+            return joint_angles
 
         else:
             print("Invalide inverse kinematics arguments")
-            return
+            return False
+        
+    
+    def lever_distance(self, joint_2_3_angle, joint_2_6_angle):
+        return np.sin(np.pi-(-joint_2_6_angle)-joint_2_3_angle) * self.lever_arm_length
+        
+
+    def is_valid_for_collision_check(self, x, z, joint_2_3_angle, joint_2_6_angle):
+        return x is not None and z is not None and joint_2_3_angle is not None and joint_2_6_angle is not None
+
+    def is_within_range(self, joint_angle, range_limits):
+        return range_limits[0] <= joint_angle <= range_limits[1]
+
+    def check_for_collisions(self, x=None, z=None, joint_2_3_angle=None, joint_2_6_angle=None):
+        if not self.is_valid_for_collision_check(x, z, joint_2_3_angle, joint_2_6_angle):
+            print("Invalid arguments for collision check")
+            return False
+        
+        try:
+            if x >= 90:
+                if not self.is_within_range(joint_2_3_angle, self.upper_arm_range):
+                    return False
+                if not self.is_within_range(joint_2_6_angle, self.lower_arm_range):
+                    return False
+                if self.lever_distance(joint_2_3_angle, joint_2_6_angle) >= self.min_lever_distance:
+                    return True
+
+        except RuntimeWarning:
+            pass
+
+        return False
+
