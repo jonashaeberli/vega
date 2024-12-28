@@ -1,0 +1,5 @@
+to regenerate the ui use the following command
+$ pyuic5 -o vega_gui/main_window_ui.py ui/main_window.ui
+
+then replace the pyqt import with this:
+python_qt_binding

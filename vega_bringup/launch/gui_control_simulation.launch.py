@@ -7,7 +7,7 @@ import os
 def generate_launch_description():
     # Get the path to the launch file in package_a
     vega_description_launch_dir = os.path.join(get_package_share_directory('vega_description'), 'launch')
-    launch_file_path = os.path.join(vega_description_launch_dir, 'display_simulation.launch.py')
+    launch_file_path = os.path.join(vega_description_launch_dir, 'display_no_gui.launch.py')
 
     return LaunchDescription([
         IncludeLaunchDescription(
