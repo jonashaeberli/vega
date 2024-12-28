@@ -31,7 +31,24 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>881</width>
+      <height>601</height>
+     </rect>
+    </property>
+    <property name="acceptDrops">
+     <bool>true</bool>
+    </property>
+    <property name="dragEnabled">
+     <bool>true</bool>
+    </property>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -45,8 +62,8 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionLoad_Program"/>
-    <addaction name="actionExport_Program"/>
+    <addaction name="action_load_program"/>
+    <addaction name="action_export_program"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -67,19 +84,19 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionAdd_Viapoint"/>
+   <addaction name="action_add_viapoint"/>
   </widget>
-  <action name="actionLoad_Program">
+  <action name="action_load_program">
    <property name="text">
     <string>Load Program</string>
    </property>
   </action>
-  <action name="actionExport_Program">
+  <action name="action_export_program">
    <property name="text">
     <string>Export Program</string>
    </property>
   </action>
-  <action name="actionAdd_Viapoint">
+  <action name="action_add_viapoint">
    <property name="text">
     <string>Add Viapoint</string>
    </property>
