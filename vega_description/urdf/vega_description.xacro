@@ -4,7 +4,7 @@
   name="vega_description">
 
   <link
-    name="Link_1">
+    name="link_1">
     <inertial>
       <origin
         xyz="1.22743573927168E-05 -2.12020239797617E-06 0.0417491604335673"
@@ -25,7 +25,7 @@
         rpy="1.571 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_1.STL"/>
+          filename="package://vega_description/meshes/link_1.STL"/>
       </geometry>
       <material
         name="">
@@ -39,13 +39,13 @@
         rpy="1.571 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_1.STL" />
+          filename="package://vega_description/meshes/link_1.STL" />
       </geometry>
     </collision>
   </link>
 
   <link
-    name="Link_2">
+    name="link_2">
     <inertial>
       <origin
         xyz="0 0 0"
@@ -66,7 +66,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_2.STL" />
+          filename="package://vega_description/meshes/link_2.STL" />
       </geometry>
       <material
         name="">
@@ -80,22 +80,22 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_2.STL" />
+          filename="package://vega_description/meshes/link_2.STL" />
       </geometry>
     </collision>
   </link>
 
 
   <joint
-    name="Joint_1_2"
+    name="joint_1_2"
     type="revolute">
     <origin
       xyz="0 0 0.102"
       rpy="1.5707963267949 0 0" />
     <parent
-      link="Link_1" />
+      link="link_1" />
     <child
-      link="Link_2" />
+      link="link_2" />
     <axis
       xyz="0 1 0" />
     <limit
@@ -106,7 +106,7 @@
   </joint>
 
   <link
-    name="Link_3">
+    name="link_3">
     <inertial>
       <origin
         xyz="0.118778332483488 -0.0107730885379603 5.2341464495953E-13"
@@ -127,7 +127,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_3.STL" />
+          filename="package://vega_description/meshes/link_3.STL" />
       </geometry>
       <material
         name="">
@@ -141,21 +141,21 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_3.STL" />
+          filename="package://vega_description/meshes/link_3.STL" />
       </geometry>
     </collision>
   </link>
 
   <joint
-    name="Joint_2_3"
+    name="joint_2_3"
     type="revolute">
     <origin
       xyz="0.02 0.085 0.0265"
       rpy="-1.5708 0 1.8326" />
     <parent
-      link="Link_2" />
+      link="link_2" />
     <child
-      link="Link_3" />
+      link="link_3" />
     <axis
       xyz="0 1 0" />
     <limit
@@ -166,7 +166,7 @@
   </joint>
 
   <link
-    name="Link_4">
+    name="link_4">
     <inertial>
       <origin
         xyz="0.0853087481110666 -0.0109027881973163 0.00273987445096585"
@@ -187,7 +187,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_4.STL" />
+          filename="package://vega_description/meshes/link_4.STL" />
       </geometry>
       <material
         name="">
@@ -201,47 +201,47 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_4.STL" />
+          filename="package://vega_description/meshes/link_4.STL" />
       </geometry>
     </collision>
   </link>
 
   <link
-    name="Link_3_4">
+    name="link_3_4">
   </link>
 
   <joint
-    name="Joint_3_4_1"
+    name="joint_3_4_1"
     type="continuous">
-    <mimic joint="Joint_2_3" multiplier="-1" offset="0"/>
+    <mimic joint="joint_2_3" multiplier="-1" offset="0"/>
     <origin
       xyz="0.25 0.055 0"
       rpy="0 1.309 3.1416" />
     <parent
-      link="Link_3" />
+      link="link_3" />
     <child
-      link="Link_3_4" />
+      link="link_3_4" />
     <axis
       xyz="0 -1 0" />
   </joint>
 
   <joint
-    name="Joint_3_4_2"
+    name="joint_3_4_2"
     type="continuous">
-    <mimic joint="Joint_2_6" multiplier="-1" offset="0"/>
+    <mimic joint="joint_2_6" multiplier="-1" offset="0"/>
     <origin
       xyz="0 0 0"
       rpy="0 0 0" />
     <parent
-      link="Link_3_4" />
+      link="link_3_4" />
     <child
-      link="Link_4" />
+      link="link_4" />
     <axis
       xyz="0 -1 0" />
   </joint>
 
   <link
-    name="Link_5">
+    name="link_5">
     <inertial>
       <origin
         xyz="0.00952764383358035 0.00817180619347385 0.0246303315536559"
@@ -262,7 +262,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_5.STL" 
+          filename="package://vega_description/meshes/link_5.STL" 
           scale="0.001 0.001 0.001" />
       </geometry>
       <material
@@ -277,29 +277,29 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_5.STL" 
+          filename="package://vega_description/meshes/link_5.STL" 
           scale="0.001 0.001 0.001" />
       </geometry>
     </collision>
   </link>
 
   <joint
-    name="Joint_4_5"
+    name="joint_4_5"
     type="continuous">
-    <mimic joint="Joint_2_6" multiplier="-1" offset="0"/>
+    <mimic joint="joint_2_6" multiplier="-1" offset="0"/>
     <origin
       xyz="0.3 0.025 0"
       rpy="-1.5708 0 0" />
     <parent
-      link="Link_4" />
+      link="link_4" />
     <child
-      link="Link_5" />
+      link="link_5" />
     <axis
       xyz="0 0 1" />
   </joint>
 
   <link
-    name="Link_6">
+    name="link_6">
     <inertial>
       <origin
         xyz="-0.0497529093598293 -1.11022302462516E-16 -0.00976909265143127"
@@ -320,7 +320,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_6.STL" />
+          filename="package://vega_description/meshes/link_6.STL" />
       </geometry>
       <material
         name="">
@@ -334,21 +334,21 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_6.STL" />
+          filename="package://vega_description/meshes/link_6.STL" />
       </geometry>
     </collision>
   </link>
 
   <joint
-    name="Joint_2_6"
+    name="joint_2_6"
     type="revolute">
     <origin
       xyz="0.02 0.085 -0.0285"
       rpy="0 0 0.17453" />
     <parent
-      link="Link_2" />
+      link="link_2" />
     <child
-      link="Link_6" />
+      link="link_6" />
     <axis
       xyz="0 0 1" />
     <limit
@@ -359,7 +359,7 @@
   </joint>
 
   <link
-    name="Link_7">
+    name="link_7">
     <inertial>
       <origin
         xyz="-0.125000000000126 0.0145256299759448 1.9942193729694E-11"
@@ -380,7 +380,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_7.STL" />
+          filename="package://vega_description/meshes/link_7.STL" />
       </geometry>
       <material
         name="">
@@ -394,47 +394,47 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_7.STL" />
+          filename="package://vega_description/meshes/link_7.STL" />
       </geometry>
     </collision>
   </link>
 
   <link
-    name="Link_6_7">
+    name="link_6_7">
   </link>
 
   <joint
-    name="Joint_6_7_1"
+    name="joint_6_7_1"
     type="continuous">
-    <mimic joint="Joint_2_3" multiplier="-1" offset="0"/>
+    <mimic joint="joint_2_3" multiplier="-1" offset="0"/>
     <origin
       xyz="-0.115 0 0.025"
       rpy="1.5708 0 1.6580" />
     <parent
-      link="Link_6" />
+      link="link_6" />
     <child
-      link="Link_6_7" />
+      link="link_6_7" />
     <axis
       xyz="0 1 0" />
   </joint>
 
   <joint
-    name="Joint_6_7_2"
+    name="joint_6_7_2"
     type="continuous">
-    <mimic joint="Joint_2_6" multiplier="-1" offset="0"/>
+    <mimic joint="joint_2_6" multiplier="-1" offset="0"/>
     <origin
       xyz="0 0 0"
       rpy="0 0 0" />
     <parent
-      link="Link_6_7" />
+      link="link_6_7" />
     <child
-      link="Link_7" />
+      link="link_7" />
     <axis
       xyz="0 1 0" />
   </joint>
   
   <link
-    name="Link_8">
+    name="link_8">
     <inertial>
       <origin
         xyz="0.124999999999945 0.0125783936076485 -0.00430959459606036"
@@ -456,7 +456,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_8.STL" 
+          filename="package://vega_description/meshes/link_8.STL" 
           scale="0.001 0.001 0.001" />
       </geometry>
       <material
@@ -471,29 +471,29 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_8.STL" 
+          filename="package://vega_description/meshes/link_8.STL" 
           scale="0.001 0.001 0.001" />
       </geometry>
     </collision>
   </link>
 
   <joint
-    name="Joint_2_8"
+    name="joint_2_8"
     type="continuous">
-    <mimic joint="Joint_2_3" multiplier="-1" offset="0"/>    
+    <mimic joint="joint_2_3" multiplier="-1" offset="0"/>    
     <origin
       xyz="-0.055 0.135 0.049"
       rpy="1.5708 0 1.8326" />
     <parent
-      link="Link_2" />
+      link="link_2" />
     <child
-      link="Link_8" />
+      link="link_8" />
     <axis
       xyz="0 1 0" />
   </joint>
 
   <link
-    name="Link_9">
+    name="link_9">
     <inertial>
       <origin
         xyz="-0.020638001968642 0.0251648747005984 0.00755412551075126"
@@ -514,7 +514,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_9.STL" />
+          filename="package://vega_description/meshes/link_9.STL" />
       </geometry>
       <material
         name="">
@@ -528,28 +528,28 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_9.STL" />
+          filename="package://vega_description/meshes/link_9.STL" />
       </geometry>
     </collision>
   </link>
 
   <joint
-    name="Joint_8_9"
+    name="joint_8_9"
     type="continuous">
-    <mimic joint="Joint_2_3" multiplier="1" offset="0"/>
+    <mimic joint="joint_2_3" multiplier="1" offset="0"/>
     <origin
       xyz="0.25 -0.0175 0"
       rpy="1.5708 -1.309 3.1416" />
     <parent
-      link="Link_8" />
+      link="link_8" />
     <child
-      link="Link_9" />
+      link="link_9" />
     <axis
       xyz="0 0 1" />
   </joint>
 
   <link
-    name="Link_10">
+    name="link_10">
     <inertial>
       <origin
         xyz="0.151523838773093 0.0120793005495848 -0.00451680024396695"
@@ -570,7 +570,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_10.STL" />
+          filename="package://vega_description/meshes/link_10.STL" />
       </geometry>
       <material
         name="">
@@ -584,28 +584,28 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://vega_description/meshes/Link_10.STL" />
+          filename="package://vega_description/meshes/link_10.STL" />
       </geometry>
     </collision>
   </link>
   
   <joint
-    name="Joint_9_10"
+    name="joint_9_10"
     type="continuous">
-    <mimic joint="Joint_2_6" multiplier="1" offset="0"/>
+    <mimic joint="joint_2_6" multiplier="1" offset="0"/>
     <origin
       xyz="0.095 -0.015 0.0175"
       rpy="1.5708 0 0" />
     <parent
-      link="Link_9" />
+      link="link_9" />
     <child
-      link="Link_10" />
+      link="link_10" />
     <axis
       xyz="0 1 0" />
   </joint>
 
   <link
-    name="Link_11">
+    name="link_11">
     <inertial>
       <origin
         xyz="0.151523838773093 0.0120793005495848 -0.00451680024396695"
@@ -623,21 +623,21 @@
   </link>
 
   <joint
-    name="Joint_5_11"
+    name="joint_5_11"
     type="fixed">
     <origin
       xyz="0.060 -0.054 0.025"
       rpy="0 0 0" />
     <parent
-      link="Link_5" />
+      link="link_5" />
     <child
-      link="Link_11" />
+      link="link_11" />
     <axis
       xyz="0 1 0" />
   </joint>
 
   <link
-    name="Link_Tool">
+    name="link_tool">
     <inertial>
       <origin
         xyz="0.151523838773093 0.0120793005495848 -0.00451680024396695"
@@ -676,15 +676,15 @@
   </link>
 
   <joint
-    name="Joint_11_Tool"
+    name="joint_11_tool"
     type="revolute">
     <origin
       xyz="0 0 0"
       rpy="0 0 0" />
     <parent
-      link="Link_11" />
+      link="link_11" />
     <child
-      link="Link_Tool" />
+      link="link_Tool" />
     <axis
       xyz="0 1 0" />
     <limit
