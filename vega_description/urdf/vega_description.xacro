@@ -684,7 +684,7 @@
     <parent
       link="link_11" />
     <child
-      link="link_Tool" />
+      link="link_tool" />
     <axis
       xyz="0 1 0" />
     <limit
