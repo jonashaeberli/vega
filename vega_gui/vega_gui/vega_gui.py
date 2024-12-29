@@ -11,6 +11,7 @@ from python_qt_binding.QtXml import QDomDocument
 from .main_window_ui import Ui_MainWindow
 from .manage_scroll_view import ManageScrollWidgets
 from .vega_gui_node import VegaGuiNode
+from vega_kinematics_solver.kinematics import Kinematics
 
 
 class VegaGui(QMainWindow):
@@ -47,13 +48,28 @@ class VegaGui(QMainWindow):
     def connectSignalsSlots(self):
         self.ui.action_add_viapoint.triggered.connect(self.add_viapoint)
         self.ui.action_add_gripper.triggered.connect(self.add_gripper)
+        self.ui.check_box_show_interactive_marker.stateChanged.connect(self.handle_checkbox_state_change)
 
     def add_viapoint(self):
         self.manage_scroll_widgets.add_widget_set('move')
-        self.ros_node.publish_message('adding via point')
 
     def add_gripper(self):
         self.manage_scroll_widgets.add_widget_set('gripper')
+
+    def handle_checkbox_state_change(self, state):
+        # Handle when checkbox is checked or unchecked
+        if state == 2:  # Qt.Checked
+            print("Checkbox is checked")
+            self.show_interactive_marker()  # Call function for checked state
+        else:  # Qt.Unchecked or Qt.PartiallyChecked
+            print("Checkbox is unchecked")
+            self.hide_interactive_marker()  # Call function for unchecked state    
+
+    def show_interactive_marker(self):
+        self.ros_node.create_interactive_marker()
+
+    def hide_interactive_marker(self):
+        self.ros_node.cleanup_interactive_marker()
 
     def closeEvent(self, event):
         self.ros_node.destroy_node()
