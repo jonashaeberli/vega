@@ -1,12 +1,12 @@
 import sys
 from python_qt_binding.QtWidgets import (
-    QApplication, QDialog, QMainWindow, QMessageBox, QInputDialog, QListWidgetItem, QFileDialog
+    QApplication, QMainWindow, QFileDialog, QWidget
 )
-from python_qt_binding.QtCore import Qt  # Import Qt from QtCore for access to Qt flags and enums
+from python_qt_binding.QtCore import Qt
 from python_qt_binding.QtXml import QDomDocument
 
 from .main_window_ui import Ui_MainWindow
-from .add_via_dialog_ui import Ui_add_via
+from .manage_scroll_view import ManageScrollWidgets
 
 
 class VegaGui(QMainWindow):
@@ -17,95 +17,24 @@ class VegaGui(QMainWindow):
 
         self.connectSignalsSlots()
 
+        self.manage_scroll_widgets = ManageScrollWidgets(self.ui)
+
 
     def connectSignalsSlots(self):
         self.ui.action_add_viapoint.triggered.connect(self.add_viapoint)
         self.ui.action_export_program.triggered.connect(self.export_to_xml)
-        self.ui.listWidget.itemDoubleClicked.connect(self.edit_viapoint)  # Connect double-click to editing
-
-
+        self.ui.action_add_gripper.triggered.connect(self.add_gripper)
 
     def add_viapoint(self):
-        # Create a dialog instance and set up the UI
-        dialog = QDialog(self)
-        ui = Ui_add_via()
-        ui.setupUi(dialog)
-        
-        # Show the dialog and check if the user clicked 'Ok'
-        if dialog.exec_() == QDialog.Accepted:
-            # Retrieve the values from the spin boxes
-            x = ui.doubleSpinBox.value()
-            y = ui.doubleSpinBox_2.value()
-            z = ui.doubleSpinBox_3.value()
-            yaw = ui.doubleSpinBox_4.value()
+        self.manage_scroll_widgets.add_widget_set('move')
 
-            # Create the viapoint dictionary
-            viapoint = {
-                "x": x,
-                "y": y,
-                "z": z,
-                "yaw": yaw,
-                "velocity": 0,  # Or any value for velocity you need
-            }
+    def add_gripper(self):
+        self.manage_scroll_widgets.add_widget_set('gripper')
 
-            # Create a list item with the entered data
-            item = QListWidgetItem(f"X: {viapoint['x']}, Y: {viapoint['y']}, "
-                                f"Z: {viapoint['z']}, Yaw: {viapoint['yaw']}, "
-                                f"Velocity: {viapoint['velocity']}")
-            item.setData(1, viapoint)  # Store the viapoint data in the item
-            
-            # Make the item editable
-            item.setFlags(item.flags() | Qt.ItemIsEditable)
-            
-            self.ui.listWidget.addItem(item)
-
-
-    def edit_viapoint(self, item):
-        # When the item is double-clicked, open the dialog to edit values
-        viapoint = item.data(1)  # Retrieve the stored viapoint data
-        
-        # Create a dialog instance and set up the UI
-        dialog = QDialog(self)
-        ui = Ui_add_via()
-        ui.setupUi(dialog)
-        
-        # Set the current values in the dialog
-        ui.doubleSpinBox.setValue(viapoint["x"])
-        ui.doubleSpinBox_2.setValue(viapoint["y"])
-        ui.doubleSpinBox_3.setValue(viapoint["z"])
-        ui.doubleSpinBox_4.setValue(viapoint["yaw"])
-
-        # Connect the Cancel button to a method that deletes the item
-        dialog.rejected.connect(lambda: self.delete_viapoint(item, dialog))
-        
-        # Show the dialog and check if the user clicked 'Ok'
-        if dialog.exec_() == QDialog.Accepted:
-            # Retrieve the updated values
-            viapoint["x"] = ui.doubleSpinBox.value()
-            viapoint["y"] = ui.doubleSpinBox_2.value()
-            viapoint["z"] = ui.doubleSpinBox_3.value()
-            viapoint["yaw"] = ui.doubleSpinBox_4.value()
-
-            # Update the text of the item
-            item.setText(f"X: {viapoint['x']}, Y: {viapoint['y']}, "
-                         f"Z: {viapoint['z']}, Yaw: {viapoint['yaw']}, "
-                         f"Velocity: {viapoint['velocity']}")
-
-            # Update the stored data in the item
-            item.setData(1, viapoint)
-
-    def delete_viapoint(self, item, dialog):
-        # Delete the item from the list widget and close the dialog
-        row = self.ui.listWidget.row(item)  # Get the index of the item
-        self.ui.listWidget.takeItem(row)  # Remove the item from the list
-        dialog.accept()  # Close the dialog
 
     def export_to_xml(self):
-        # Gather data from the list
-        viapoints = []
-        for i in range(self.ui.listWidget.count()):
-            item = self.ui.listWidget.item(i)
-            viapoints.append(item.data(1))  # Retrieve the viapoint data
+        # Gather data from the model
+        viapoints = self.model.getViaPoints()
 
         # Create XML document
         doc = QDomDocument("Viapoints")
@@ -134,6 +63,7 @@ def main():
     win = VegaGui()
     win.show()
     sys.exit(app.exec_())
+
 
 if __name__ == '__main__':
     main()
