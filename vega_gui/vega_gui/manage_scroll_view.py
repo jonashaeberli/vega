@@ -85,7 +85,7 @@ class ManageScrollWidgets():
         # Optionally, connect delete button to remove the widget set
         delete_btn.clicked.connect(lambda: self.remove_widget_set(widget_set))
 
-        self.ui.scrollAreaWidgetContents.layout().addWidget(widget_set)
+        self.ui.scroll_area_program.layout().addWidget(widget_set)
 
         # Track the widget set
         self.widget_sets.append(widget_set)
@@ -94,7 +94,7 @@ class ManageScrollWidgets():
 
     def remove_widget_set(self, widget_set):
         # Remove the widget set from the layout and list
-        self.ui.scrollAreaWidgetContents.layout().removeWidget(widget_set)
+        self.ui.scroll_area_program.layout().removeWidget(widget_set)
         widget_set.deleteLater()
         self.widget_sets.remove(widget_set)
 
