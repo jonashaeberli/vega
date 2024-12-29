@@ -1,29 +1,34 @@
+from shlex import join
 import sys
 import rclpy
+
 from rclpy.node import Node
-from std_msgs.msg import String
 
 from interactive_markers import InteractiveMarkerServer
 from visualization_msgs.msg import InteractiveMarker
 from visualization_msgs.msg import InteractiveMarkerControl
 from visualization_msgs.msg import Marker
 
+from vega_kinematics_solver.kinematics import Kinematics
+
 from geometry_msgs.msg import Point
-from geometry_msgs.msg import TransformStamped
+from sensor_msgs.msg import JointState
 from interactive_markers import InteractiveMarkerServer
-from interactive_markers import MenuHandler
-import rclpy
-from rosidl_runtime_py import set_message_fields
-from tf2_ros.transform_broadcaster import TransformBroadcaster
 from visualization_msgs.msg import InteractiveMarker
 from visualization_msgs.msg import InteractiveMarkerControl
 from visualization_msgs.msg import InteractiveMarkerFeedback
-from visualization_msgs.msg import Marker
+
+from geometry_msgs.msg import Quaternion
+
 
 class VegaGuiNode(Node):
     def __init__(self):
         super().__init__('vega_gui_node')
         self.response_data = {}
+        self.kinematics = Kinematics()
+
+        # publisher to move robot
+        self._publisher = self.create_publisher(JointState, 'control_joints', 10)
 
     def create_interactive_marker(self):
         self.get_logger().info('start interactive marker server')
@@ -33,12 +38,14 @@ class VegaGuiNode(Node):
         int_marker.pose.position = Point(x=0.5, y=0.5, z=0.0)
         int_marker.scale = 1.0
 
-        int_marker.name = 'simple_6dof'
-        int_marker.description = 'Simple 6-DOF Control'
+        int_marker.name = 'control vega'
+        int_marker.description = 'Simple 4-DOF Control for vega robotic arm'
 
         interaction_mode = InteractiveMarkerControl.MOVE_ROTATE_3D
-        # insert a box
-        self.makeBoxControl(int_marker)
+
+        control = InteractiveMarkerControl()
+        control.always_visible = True
+        int_marker.controls.append(control)
         int_marker.controls[0].interaction_mode = interaction_mode
 
         control = InteractiveMarkerControl()
@@ -49,6 +56,7 @@ class VegaGuiNode(Node):
         self.normalizeQuaternion(control.orientation)
         control.name = 'move_x'
         control.interaction_mode = InteractiveMarkerControl.MOVE_AXIS
+        control.orientation_mode = InteractiveMarkerControl.FIXED
         int_marker.controls.append(control)
 
         control = InteractiveMarkerControl()
@@ -69,6 +77,7 @@ class VegaGuiNode(Node):
         self.normalizeQuaternion(control.orientation)
         control.name = 'move_z'
         control.interaction_mode = InteractiveMarkerControl.MOVE_AXIS
+        control.orientation_mode = InteractiveMarkerControl.FIXED
         int_marker.controls.append(control)
 
         control = InteractiveMarkerControl()
@@ -79,33 +88,12 @@ class VegaGuiNode(Node):
         self.normalizeQuaternion(control.orientation)
         control.name = 'move_y'
         control.interaction_mode = InteractiveMarkerControl.MOVE_AXIS
+        control.orientation_mode = InteractiveMarkerControl.FIXED
         int_marker.controls.append(control)
 
         self.interactive_marker_server.insert(int_marker, feedback_callback=self.interactive_marker_feedback)
         self.interactive_marker_server.applyChanges()
-
-
-    def makeBoxControl(self, msg):
-        control = InteractiveMarkerControl()
-        control.always_visible = True
-        control.markers.append(self.makeBox(msg))
-        msg.controls.append(control)
-        return control
-    
-
-    def makeBox(self, msg):
-        marker = Marker()
-
-        marker.type = Marker.CUBE
-        marker.scale.x = msg.scale * 0.45
-        marker.scale.y = msg.scale * 0.45
-        marker.scale.z = msg.scale * 0.45
-        marker.color.r = 0.5
-        marker.color.g = 0.5
-        marker.color.b = 0.5
-        marker.color.a = 1.0
-
-        return marker
+        
     
 
     def normalizeQuaternion(self, quaternion_msg):
@@ -147,10 +135,28 @@ class VegaGuiNode(Node):
                 f'time: {feedback.header.stamp.sec} sec, '
                 f'{feedback.header.stamp.nanosec} nsec'
             )
+            self.set_robot_position(x=feedback.pose.position.x, y=feedback.pose.position.y, z=feedback.pose.position.z, yaw=0.0)
         elif feedback.event_type == InteractiveMarkerFeedback.MOUSE_DOWN:
             self.get_logger().info(f'{log_prefix}: mouse down at {log_mouse}')
         elif feedback.event_type == InteractiveMarkerFeedback.MOUSE_UP:
             self.get_logger().info(f'{log_prefix}: mouse up at {log_mouse}')
+
+    def set_robot_position(self, x, y, z, yaw):
+        msg = JointState()
+        joint_angles = self.kinematics.inverse_kinematics(x*1000,y*1000,z*1000,yaw)
+
+        if joint_angles == {}:
+            self.get_logger().info(f'ik failed')
+
+        for joint, angle in joint_angles.items():
+            msg.name.append(joint)
+            msg.position.append(angle)
+
+        self.get_logger().info(f'Publishing message: {msg}')
+        self._publisher.publish(msg)
+            
+        
+
 
     def cleanup_interactive_marker(self):
         self.interactive_marker_server.shutdown()
