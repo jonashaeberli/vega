@@ -36,7 +36,7 @@ class VegaGuiNode(Node):
         int_marker = InteractiveMarker()
         int_marker.header.frame_id = 'link_1'
         int_marker.pose.position = Point(x=0.5, y=0.5, z=0.0)
-        int_marker.scale = 1.0
+        int_marker.scale = 0.25
 
         int_marker.name = 'control vega'
         int_marker.description = 'Simple 4-DOF Control for vega robotic arm'
