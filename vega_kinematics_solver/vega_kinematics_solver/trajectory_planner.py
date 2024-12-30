@@ -1,3 +1,5 @@
+import sys
+import os
 import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionServer, GoalResponse, CancelResponse
@@ -7,12 +9,15 @@ from geometry_msgs.msg import Pose
 from trajectory_msgs.msg import JointTrajectory
 
 from vega_kinematics_solver.kinematics import Kinematics
+from roboticstoolbox.tools.trajectory import Trajectory
 
 
 class TrajectoryPlanner(Node):
 
     def __init__(self):
         super().__init__('trajectory_planner')
+
+        self.get_logger().info('trajectory instance created')
 
         self.linear_trajectory_action = rclpy.action.ActionServer(
             self, TrajectoryRequest, 'plan_trajectory',

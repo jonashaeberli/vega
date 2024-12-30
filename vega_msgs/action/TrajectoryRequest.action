@@ -1,7 +1,9 @@
 # Goal definition
+# currently supported
+# at least two waypoints are needed
 string trajectory_type
-geometry_msgs/Pose start_position
-geometry_msgs/Pose end_position
+string time_scaling_type
+geometry_msgs/Pose[] waypoints
 
 ---
 

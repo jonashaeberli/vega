@@ -10,7 +10,7 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>robot_state_publisher</depend>
-  <depend>rviz</depend>
+  <depend>rviz2</depend>
   <depend>joint_state_publisher</depend>
 
   <test_depend>ament_lint_auto</test_depend>
