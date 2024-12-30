@@ -3,6 +3,7 @@ import sys
 import rclpy
 
 from rclpy.node import Node
+from rclpy.action import ActionClient
 
 from interactive_markers import InteractiveMarkerServer
 from visualization_msgs.msg import InteractiveMarker
@@ -12,6 +13,8 @@ from visualization_msgs.msg import Marker
 from vega_kinematics_solver.kinematics import Kinematics
 
 from geometry_msgs.msg import Point
+from geometry_msgs.msg import Pose
+from trajectory_msgs.msg import JointTrajectory
 from sensor_msgs.msg import JointState
 from interactive_markers import InteractiveMarkerServer
 from visualization_msgs.msg import InteractiveMarker
@@ -20,6 +23,7 @@ from visualization_msgs.msg import InteractiveMarkerFeedback
 
 from geometry_msgs.msg import Quaternion
 
+from vega_msgs.action import TrajectoryRequest
 
 class VegaGuiNode(Node):
     def __init__(self):
@@ -27,8 +31,11 @@ class VegaGuiNode(Node):
         self.response_data = {}
         self.kinematics = Kinematics()
 
-        # publisher to move robot
+        # publisher to move robot 
         self._publisher = self.create_publisher(JointState, 'control_joints', 10)
+
+        # action client to plan trajectory
+        self.trajectory_request_action = ActionClient(self, TrajectoryRequest, 'plan_trajectory')
 
     def create_interactive_marker(self):
         self.get_logger().info('start interactive marker server')
@@ -154,7 +161,30 @@ class VegaGuiNode(Node):
 
         self.get_logger().info(f'Publishing message: {msg}')
         self._publisher.publish(msg)
-            
+
+    def send_trajectory_planing_goal(self, x, y, z):
+        goal = TrajectoryRequest.Goal()
+        for i in range(len(x)):
+            pose = Pose()
+            point = Point()
+            point.x = x[i]
+            point.y = y[i]
+            point.z = z[i]
+            quat = Quaternion()
+            pose.position = point
+            pose.orientation = quat
+            goal.waypoints.append(pose)
+
+
+        self.send_goal_future = self.trajectory_request_action.send_goal_async(
+            goal, feedback_callback=self.feedback_callback)
+        self.send_goal_future.add_done_callback(self.goal_response_callback)
+    
+    def goal_response_callback(self, future):
+        pass
+
+    def feedback_callback(self, feedback_msg):
+        pass
         
 
 

@@ -49,6 +49,7 @@ class VegaGui(QMainWindow):
         self.ui.action_add_viapoint.triggered.connect(self.add_viapoint)
         self.ui.action_add_gripper.triggered.connect(self.add_gripper)
         self.ui.check_box_show_interactive_marker.stateChanged.connect(self.handle_checkbox_state_change)
+        self.ui.calculate_trajectory_btn.clicked.connect(self.calculate_trajectory)
 
     def add_viapoint(self):
         self.manage_scroll_widgets.add_widget_set('move')
@@ -70,6 +71,11 @@ class VegaGui(QMainWindow):
 
     def hide_interactive_marker(self):
         self.ros_node.cleanup_interactive_marker()
+
+    def calculate_trajectory(self):
+        (x, y, z) = self.manage_scroll_widgets.return_widget_data()
+        self.ros_node.get_logger().info(f'x: {x}, y: {y}, z: {z}')
+        self.ros_node.send_trajectory_planing_goal(x, y, z)
 
     def closeEvent(self, event):
         self.ros_node.destroy_node()

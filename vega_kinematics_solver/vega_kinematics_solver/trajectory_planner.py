@@ -37,7 +37,11 @@ class TrajectoryPlanner(Node):
     def execute_callback(self, goal_handle):
         self.get_logger().info('Unpacking positions...')
         goal_msg = goal_handle.request
-        self.get_logger().info('Start position{}'.format(goal_msg.start_position))
+        self.get_logger().info('Start position{}'.format(goal_msg.waypoints[0]))
+        if len(goal_msg.waypoints) > 2:
+            for i in range(len(goal_msg.waypoints) - 2):
+                self.get_logger().info('Via position{0}{1}'.format(i ,goal_msg.waypoints[i+1]))
+        self.get_logger().info('End position{}'.format(goal_msg.waypoints[len(goal_msg.waypoints)-1]))
 
         feedback_msg = TrajectoryRequest.Feedback()
         # TODO: Provide feedback for planning status

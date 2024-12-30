@@ -8,6 +8,9 @@ def generate_launch_description():
     vega_description_launch_dir = os.path.join(get_package_share_directory('vega_description'), 'launch')
     launch_file_path_description = os.path.join(vega_description_launch_dir, 'display_no_gui.launch.py')
 
+    vega_kinematics_solver_launch_dir = os.path.join(get_package_share_directory('vega_kinematics_solver'), 'launch')
+    launch_file_path_kinematics_solver = os.path.join(vega_kinematics_solver_launch_dir, 'trajectory_planner.launch.py')
+
     vega_gui_launch_dir = os.path.join(get_package_share_directory('vega_gui'), 'launch')
     launch_file_path_gui = os.path.join(vega_gui_launch_dir, 'gui.launch.py')
 
@@ -15,6 +18,11 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(launch_file_path_description),
         ),
+
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(launch_file_path_kinematics_solver),
+        ),
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(launch_file_path_gui),
         )

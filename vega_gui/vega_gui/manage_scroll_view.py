@@ -5,7 +5,6 @@ class ManageScrollWidgets():
     def __init__(self, ui):
         self.ui = ui  # Assign ui to self.ui
         self.widget_sets = []
-        self.model = ScrollModel()
 
     def add_widget_set(self, type='move'):
         widget_set_layout = QtWidgets.QHBoxLayout()
@@ -81,6 +80,13 @@ class ManageScrollWidgets():
         # Create a new QWidget for the widget set layout
         widget_set = QtWidgets.QWidget()
         widget_set.setLayout(widget_set_layout)
+
+        widget_set.spin_boxes = {
+            'x': x_spin_box,
+            'y': y_spin_box,
+            'z': z_spin_box,
+            'yaw': yaw_spin_box
+        }
         
         # Optionally, connect delete button to remove the widget set
         delete_btn.clicked.connect(lambda: self.remove_widget_set(widget_set))
@@ -98,7 +104,17 @@ class ManageScrollWidgets():
         widget_set.deleteLater()
         self.widget_sets.remove(widget_set)
 
+    def return_widget_set(self):
+        return self.widget_sets
+    
+    def return_widget_data(self):
+        x_values = []
+        y_values = []
+        z_values = []
 
-class ScrollModel():
-    def __init__(self):
-        pass
+        for widget in self.widget_sets:
+            x_values.append(widget.spin_boxes['x'].value())
+            y_values.append(widget.spin_boxes['y'].value())
+            z_values.append(widget.spin_boxes['z'].value())
+
+        return x_values, y_values, z_values
