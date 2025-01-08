@@ -19,18 +19,22 @@ class ManageScrollWidgets():
             x_label = QtWidgets.QLabel("X:")
             x_label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
             x_spin_box = QtWidgets.QDoubleSpinBox()
+            x_spin_box.setMaximum(500.0)
 
             y_label = QtWidgets.QLabel("Y:")
             y_label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
             y_spin_box = QtWidgets.QDoubleSpinBox()
+            y_spin_box.setMaximum(500.0)
 
             z_label = QtWidgets.QLabel("Z:")
             z_label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
             z_spin_box = QtWidgets.QDoubleSpinBox()
+            z_spin_box.setMaximum(500.0)
 
             yaw_label = QtWidgets.QLabel("Yaw:")
             yaw_label.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
             yaw_spin_box = QtWidgets.QDoubleSpinBox()
+            yaw_spin_box.setMaximum(360.0)
 
             delete_btn = QtWidgets.QPushButton("Delete")
 
