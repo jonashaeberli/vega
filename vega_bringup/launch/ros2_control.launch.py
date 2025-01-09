@@ -26,22 +26,6 @@ def generate_launch_description():
 
     declared_arguments = []
 
-    # Get URDF via xacro
-    robot_description_content = Command(
-        [
-            PathJoinSubstitution([FindExecutable(name="xacro")]),
-            " ",
-            PathJoinSubstitution(
-                [
-                    FindPackageShare("vega_description"),
-                    "urdf",
-                    "vega.xacro",
-                ]
-            ),
-        ]
-    )
-    robot_description = {"robot_description": robot_description_content}
-
     robot_controllers = PathJoinSubstitution(
         [
             FindPackageShare("vega_bringup"),
@@ -49,28 +33,12 @@ def generate_launch_description():
             "vega_modular_actuators.yaml",
         ]
     )
-    rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare("vega_description"), "rviz", "urdf_vis.rviz"]
-    )
 
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
         parameters=[robot_controllers],
         output="both",
-    )
-    robot_state_pub_node = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        output="both",
-        parameters=[robot_description],
-    )
-    rviz_node = Node(
-        package="rviz2",
-        executable="rviz2",
-        name="rviz2",
-        output="log",
-        arguments=["-d", rviz_config_file],
     )
 
     joint_state_broadcaster_spawner = Node(
@@ -85,14 +53,6 @@ def generate_launch_description():
         arguments=["joint_trajectory_controller", "--param-file", robot_controllers],
     )
 
-    # Delay rviz start after `joint_state_broadcaster`
-    delay_rviz_after_joint_state_broadcaster_spawner = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=joint_state_broadcaster_spawner,
-            on_exit=[rviz_node],
-        )
-    )
-
     # Delay start of joint_state_broadcaster after `robot_controller`
     # TODO(anyone): This is a workaround for flaky tests. Remove when fixed.
     delay_joint_state_broadcaster_after_robot_controller_spawner = RegisterEventHandler(
@@ -104,9 +64,7 @@ def generate_launch_description():
 
     nodes = [
         control_node,
-        robot_state_pub_node,
         robot_controller_spawner,
-        delay_rviz_after_joint_state_broadcaster_spawner,
         delay_joint_state_broadcaster_after_robot_controller_spawner,
     ]
 

@@ -33,8 +33,4 @@ joint_trajectory_controller:
 
 joint_state_broadcaster:
   ros__parameters:
-    joints:
-        - joint_1_2
-        - joint_2_3
-        - joint_2_6
-        - joint_11_tool
+    use_local_topics: true
