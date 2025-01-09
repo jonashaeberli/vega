@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="vega_modular_actuators">
+
+    <ros2_control name="joint_1_2" type="actuator">
+      <hardware>
+        <plugin>odrive_v3_hardware/OdriveV3Hardware</plugin>
+        <param name="transmission">100</param>
+      </hardware>
+      <joint name="joint_1_2">
+        <command_interface name="position">
+          <param name="min">-100</param>
+          <param name="max">100</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-10000</param>
+          <param name="max">10000</param>
+        </command_interface>
+        <command_interface name="acceleration">
+          <param name="min">-10000</param>
+          <param name="max">10000</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </ros2_control>
+
+    <ros2_control name="joint_2_3" type="actuator">
+      <hardware>
+        <plugin>odrive_v3_hardware/OdriveV3Hardware</plugin>
+        <param name="transmission">66.6666666</param>
+      </hardware>
+      <joint name="joint_2_3">
+        <command_interface name="position">
+          <param name="min">-100</param>
+          <param name="max">100</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-10000</param>
+          <param name="max">10000</param>
+        </command_interface>
+        <command_interface name="acceleration">
+          <param name="min">-10000</param>
+          <param name="max">10000</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </ros2_control>
+
+    <ros2_control name="joint_2_6" type="actuator">
+      <hardware>
+        <plugin>odrive_v3_hardware/OdriveV3Hardware</plugin>
+        <param name="transmission">66.6666666</param>
+      </hardware>
+      <joint name="joint_2_6">
+        <command_interface name="position">
+          <param name="min">-100</param>
+          <param name="max">100</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-10000</param>
+          <param name="max">10000</param>
+        </command_interface>
+        <command_interface name="acceleration">
+          <param name="min">-10000</param>
+          <param name="max">10000</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </ros2_control>
+
+    <ros2_control name="joint_11_tool" type="actuator">
+      <hardware>
+        <plugin>odrive_v3_hardware/OdriveV3Hardware</plugin>
+        <param name="transmission">100</param>
+      </hardware>
+      <joint name="joint_11_tool">
+        <command_interface name="position">
+          <param name="min">-100</param>
+          <param name="max">100</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-10000</param>
+          <param name="max">10000</param>
+        </command_interface>
+        <command_interface name="acceleration">
+          <param name="min">-10000</param>
+          <param name="max">10000</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </ros2_control>
+  </xacro:macro>
+
+</robot>

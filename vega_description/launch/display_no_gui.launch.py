@@ -11,7 +11,7 @@ def generate_launch_description():
 
     ####### DATA INPUT ##########
     package_description = "vega_description"
-    urdf_file = 'vega_description.xacro'
+    urdf_file = 'vega.xacro'
 
     ####### DATA INPUT END ##########
     print("Fetching URDF ==>")
