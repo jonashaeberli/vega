@@ -27,7 +27,7 @@
     <ros2_control name="joint_2_3" type="actuator">
       <hardware>
         <plugin>odrive_v3_hardware/OdriveV3Hardware</plugin>
-        <param name="transmission">66.6666666</param>
+        <param name="transmission">65</param>
         <param name="joint_zero">0</param>
         <param name="can_id">2</param>
       </hardware>
@@ -48,7 +48,7 @@
     <ros2_control name="joint_2_6" type="actuator">
       <hardware>
         <plugin>odrive_v3_hardware/OdriveV3Hardware</plugin>
-        <param name="transmission">66.6666666</param>
+        <param name="transmission">65</param>
         <param name="joint_zero">0</param>
         <param name="can_id">3</param>
       </hardware>
